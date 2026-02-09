@@ -1,32 +1,571 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dente+ | Odontologia Moderna</title>
+    <title>Inova+ | Odontologia Moderna</title>
+    <meta name="description" content="Cuidando do seu sorriso com excelência, tecnologia e os melhores profissionais da região.">
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Nunito -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body {
             font-family: 'Nunito', sans-serif;
             scroll-behavior: smooth;
         }
+        .selection-bg::selection {
+            background-color: #E8F3ED;
+            color: #3D4B44;
+        }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .modal-animate {
+            animation: fadeInScale 0.3s ease-out forwards;
+        }
+        .step-content.hidden {
+            display: none !important;
+        }
+        .mix-blend-multiply {
+            mix-blend-mode: multiply;
+        }
     </style>
-<script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3"
-  }
-}
-</script>
 </head>
-<body class="bg-[#FDFBF7] text-[#3D4B44]">
-    <div id="root"></div>
+<body class="bg-[#FDFBF7] text-[#3D4B44] selection-bg">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-40 transition-all duration-300 py-6">
+        <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://i.imgur.com/0HtyACs.png" alt="Inova+" class="h-9 w-auto object-contain">
+            </div>
+
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#inicio" class="text-sm font-bold hover:text-[#8EAC9B] transition-colors">Início</a>
+                <a href="#sobre" class="text-sm font-bold hover:text-[#8EAC9B] transition-colors">Sobre nós</a>
+                <a href="#servicos" class="text-sm font-bold hover:text-[#8EAC9B] transition-colors">Tratamentos</a>
+                <button onclick="toggleBooking(true)" class="bg-[#E8F3ED] text-[#4A5D54] px-6 py-2.5 rounded-full text-sm font-bold hover:bg-[#D5E6DC] transition-all flex items-center gap-2">
+                    Marcar consulta
+                </button>
+            </div>
+
+            <!-- Mobile Toggle -->
+            <button class="md:hidden p-2" onclick="toggleMobileMenu(true)">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 z-50 bg-white p-8 flex flex-col gap-8 hidden md:hidden">
+        <div class="flex justify-between items-center">
+             <img src="https://i.imgur.com/0HtyACs.png" alt="Inova+" class="h-9 w-auto">
+             <button onclick="toggleMobileMenu(false)"><i data-lucide="x"></i></button>
+        </div>
+        <div class="flex flex-col gap-6 text-xl font-bold">
+            <a href="#inicio" onclick="toggleMobileMenu(false)">Início</a>
+            <a href="#sobre" onclick="toggleMobileMenu(false)">Sobre nós</a>
+            <a href="#servicos" onclick="toggleMobileMenu(false)">Tratamentos</a>
+        </div>
+        <button onclick="toggleMobileMenu(false); toggleBooking(true);" class="w-full bg-[#E8F3ED] text-[#4A5D54] py-4 rounded-2xl text-lg font-bold">
+            Agendar agora
+        </button>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="inicio" class="relative min-h-[100vh] flex items-center pt-28 overflow-hidden">
+            <!-- Background Decoration -->
+            <div class="absolute top-20 -right-20 w-[500px] h-[500px] bg-[#E8F3ED] rounded-full blur-[120px] opacity-60 z-0"></div>
+            <div class="absolute bottom-20 -left-20 w-[500px] h-[500px] bg-[#F5F1EA] rounded-full blur-[120px] opacity-60 z-0"></div>
+
+            <!-- Hero Image - Desktop Only -->
+            <img src="https://i.imgur.com/nswAEUK.jpeg" alt="Clínica Inova+" class="absolute bottom-0 right-0 lg:right-[2%] w-full lg:w-[65%] h-[40%] lg:h-[90%] object-contain object-bottom z-10 opacity-100 mix-blend-multiply hidden md:block">
+            
+            <div class="max-w-6xl mx-auto px-6 relative z-20 w-full flex flex-col items-center text-center lg:items-start lg:text-left">
+                <div class="w-full lg:w-[50%] space-y-8 lg:-mt-24">
+                    <h1 class="text-5xl md:text-7xl font-extrabold text-[#4A5D54] leading-[1.1] drop-shadow-sm">
+                        O sorriso que você <span class="text-[#8EAC9B]">merece</span>, hoje.
+                    </h1>
+                    <p class="text-xl text-[#6D7A73] leading-relaxed max-w-lg mx-auto lg:mx-0">
+                        Equipamentos de última geração e profissionais altamente qualificados para transformar a sua saúde bucal na Inova+.
+                    </p>
+                    <div class="flex flex-col sm:row gap-4 justify-center lg:justify-start">
+                        <button onclick="toggleBooking(true)" class="bg-[#4A5D54] text-white px-10 py-4 rounded-full text-lg font-extrabold shadow-xl shadow-[#4A5D54]/10 hover:bg-[#3D4B44] transition-all flex items-center justify-center gap-2 group">
+                            Marcar minha consulta
+                            <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                        <a href="#servicos" class="px-8 py-4 rounded-full text-lg font-extrabold text-[#4A5D54] hover:bg-white/50 transition-all text-center flex items-center justify-center">
+                            Ver tratamentos
+                        </a>
+                    </div>
+                    <div class="flex flex-col lg:flex-row items-center gap-4 pt-4 lg:justify-start">
+                        <div class="flex -space-x-3">
+                            <img src="https://picsum.photos/seed/151/100/100" class="w-10 h-10 rounded-full border-2 border-white object-cover shadow-sm" alt="Paciente">
+                            <img src="https://picsum.photos/seed/152/100/100" class="w-10 h-10 rounded-full border-2 border-white object-cover shadow-sm" alt="Paciente">
+                            <img src="https://picsum.photos/seed/153/100/100" class="w-10 h-10 rounded-full border-2 border-white object-cover shadow-sm" alt="Paciente">
+                            <img src="https://picsum.photos/seed/154/100/100" class="w-10 h-10 rounded-full border-2 border-white object-cover shadow-sm" alt="Paciente">
+                        </div>
+                        <p class="text-sm text-[#6D7A73] font-bold">
+                            Junte-se a mais de <span class="font-extrabold text-[#4A5D54]">5.000 pessoas</span> felizes.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="sobre" class="py-20 px-6 bg-[#F5F1EA]">
+            <div class="max-w-4xl mx-auto text-center space-y-8">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-[#4A5D54]">
+                    Cuidando do seu sorriso com tecnologia e carinho.
+                </h2>
+                <p class="text-lg md:text-xl text-[#6D7A73] leading-relaxed max-w-2xl mx-auto">
+                    Acreditamos que a odontologia moderna deve unir precisão técnica com um atendimento humanizado. Na Inova+, oferecemos um ambiente acolhedor e focado no seu bem-estar.
+                </p>
+                <div class="grid md:grid-cols-3 gap-8 mt-12">
+                    <div class="bg-white/50 p-8 rounded-3xl backdrop-blur-sm">
+                        <div class="w-12 h-12 bg-[#FDFBF7] rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="shield-check" class="text-[#8EAC9B]"></i>
+                        </div>
+                        <h3 class="font-extrabold mb-2">Tecnologia de Ponta</h3>
+                        <p class="text-sm text-[#6D7A73]">Equipamentos modernos para diagnósticos precisos e tratamentos indolores.</p>
+                    </div>
+                    <div class="bg-white/50 p-8 rounded-3xl backdrop-blur-sm">
+                        <div class="w-12 h-12 bg-[#FDFBF7] rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="clock" class="text-[#8EAC9B]"></i>
+                        </div>
+                        <h3 class="font-extrabold mb-2">Atendimento Ágil</h3>
+                        <p class="text-sm text-[#6D7A73]">Processos simplificados para que você não perca tempo em esperas.</p>
+                    </div>
+                    <div class="bg-white/50 p-8 rounded-3xl backdrop-blur-sm">
+                        <div class="w-12 h-12 bg-[#FDFBF7] rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="heart" class="text-[#8EAC9B]"></i>
+                        </div>
+                        <h3 class="font-extrabold mb-2">Foco no Paciente</h3>
+                        <p class="text-sm text-[#6D7A73]">Atendimento personalizado para entender e resolver suas necessidades reais.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="servicos" class="py-24 px-6 bg-white">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+                    <h2 class="text-4xl font-extrabold text-[#4A5D54]">Tratamentos Especializados</h2>
+                    <p class="text-lg text-[#6D7A73]">Oferecemos uma gama completa de serviços odontológicos com tecnologia de ponta.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="group p-8 rounded-[32px] bg-[#FDFBF7] border border-transparent hover:border-[#E8F3ED] hover:bg-white hover:shadow-xl hover:shadow-[#E8F3ED]/40 transition-all duration-300">
+                        <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                            <i data-lucide="wind" class="text-[#8EAC9B]"></i>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-[#4A5D54] mb-3">Clínica Geral</h3>
+                        <p class="text-[#6D7A73]">Tratamentos preventivos, limpezas e restaurações com foco na saúde duradoura do seu sorriso.</p>
+                    </div>
+                    <div class="group p-8 rounded-[32px] bg-[#FDFBF7] border border-transparent hover:border-[#E8F3ED] hover:bg-white hover:shadow-xl hover:shadow-[#E8F3ED]/40 transition-all duration-300">
+                        <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                            <i data-lucide="smile" class="text-[#8EAC9B]"></i>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-[#4A5D54] mb-3">Estética Dental</h3>
+                        <p class="text-[#6D7A73]">Lentes de contato e facetas de porcelana para um sorriso harmônico e radiante.</p>
+                    </div>
+                    <div class="group p-8 rounded-[32px] bg-[#FDFBF7] border border-transparent hover:border-[#E8F3ED] hover:bg-white hover:shadow-xl hover:shadow-[#E8F3ED]/40 transition-all duration-300">
+                        <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                            <i data-lucide="sparkles" class="text-[#8EAC9B]"></i>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-[#4A5D54] mb-3">Clareamento</h3>
+                        <p class="text-[#6D7A73]">Técnicas modernas para devolver a cor natural dos seus dentes com total segurança.</p>
+                    </div>
+                    <div class="group p-8 rounded-[32px] bg-[#FDFBF7] border border-transparent hover:border-[#E8F3ED] hover:bg-white hover:shadow-xl hover:shadow-[#E8F3ED]/40 transition-all duration-300">
+                        <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                            <i data-lucide="shield" class="text-[#8EAC9B]"></i>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-[#4A5D54] mb-3">Implantodontia</h3>
+                        <p class="text-[#6D7A73]">Reabilitação oral completa com implantes de alta qualidade e rápida recuperação.</p>
+                    </div>
+                    <div class="group p-8 rounded-[32px] bg-[#FDFBF7] border border-transparent hover:border-[#E8F3ED] hover:bg-white hover:shadow-xl hover:shadow-[#E8F3ED]/40 transition-all duration-300">
+                        <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                            <i data-lucide="star" class="text-[#8EAC9B]"></i>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-[#4A5D54] mb-3">Ortodontia</h3>
+                        <p class="text-[#6D7A73]">Alinhadores invisíveis e aparelhos modernos para corrigir o seu sorriso discretamente.</p>
+                    </div>
+                    <div class="group p-8 rounded-[32px] bg-[#FDFBF7] border border-transparent hover:border-[#E8F3ED] hover:bg-white hover:shadow-xl hover:shadow-[#E8F3ED]/40 transition-all duration-300">
+                        <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                            <i data-lucide="heart" class="text-[#8EAC9B]"></i>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-[#4A5D54] mb-3">Periodontia</h3>
+                        <p class="text-[#6D7A73]">Cuidados especializados para a saúde das gengivas e tecidos de suporte dental.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="py-24 px-6 bg-[#FDFBF7]">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16 space-y-4">
+                    <h2 class="text-4xl font-extrabold text-[#4A5D54]">O que nossos pacientes dizem</h2>
+                    <p class="text-lg text-[#6D7A73]">A satisfação de quem confia o sorriso à nossa equipe.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Testimonial 1 -->
+                    <div class="bg-white p-8 rounded-[40px] shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex gap-1 mb-6">
+                            <i data-lucide="star" class="w-4 h-4 text-[#8EAC9B] fill-[#8EAC9B]"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-[#8EAC9B] fill-[#8EAC9B]"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-[#8EAC9B] fill-[#8EAC9B]"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-[#8EAC9B] fill-[#8EAC9B]"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-[#8EAC9B] fill-[#8EAC9B]"></i>
+                        </div>
+                        <p class="text-[#6D7A73] italic leading-relaxed mb-8">"O atendimento na Inova+ superou todas as minhas expectativas. O resultado das minhas facetas ficou incrível e muito natural."</p>
+                        <div class="flex items-center gap-4">
+                            <img src="https://picsum.photos/seed/patient1/200/200" alt="Ana Beatriz" class="w-12 h-12 rounded-full object-cover">
+                            <div>
+                                <h4 class="font-extrabold text-[#4A5D54]">Ana Beatriz</h4>
+                                <p class="text-xs text-[#8EAC9B] font-extrabold">Paciente de Estética</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonial 2 -->
+                    <div class="bg-white p-8 rounded-[40px] shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex gap-1 mb-6">
+                            <i data-lucide="star" class="w-4 h-4 text-[#8EAC9B] fill-[#8EAC9B]"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-[#8EAC9B] fill-[#8EAC9B]"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-[#8EAC9B] fill-[#8EAC9B]"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-[#8EAC9B] fill-[#8EAC9B]"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-[#8EAC9B] fill-[#8EAC9B]"></i>
+                        </div>
+                        <p class="text-[#6D7A73] italic leading-relaxed mb-8">"Recuperei minha confiança para sorrir e comer com o tratamento de implantes. A equipe é extremamente profissional e atenciosa."</p>
+                        <div class="flex items-center gap-4">
+                            <img src="https://picsum.photos/seed/patient2/200/200" alt="Roberto Silva" class="w-12 h-12 rounded-full object-cover">
+                            <div>
+                                <h4 class="font-extrabold text-[#4A5D54]">Roberto Silva</h4>
+                                <p class="text-xs text-[#8EAC9B] font-extrabold">Paciente de Reabilitação</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonial 3 -->
+                    <div class="bg-white p-8 rounded-[40px] shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex gap-1 mb-6">
+                            <i data-lucide="star" class="w-4 h-4 text-[#8EAC9B] fill-[#8EAC9B]"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-[#8EAC9B] fill-[#8EAC9B]"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-[#8EAC9B] fill-[#8EAC9B]"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-[#8EAC9B] fill-[#8EAC9B]"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-[#8EAC9B] fill-[#8EAC9B]"></i>
+                        </div>
+                        <p class="text-[#6D7A73] italic leading-relaxed mb-8">"Estou usando os alinhadores invisíveis e o processo é super tranquilo. Recomendo a clínica para todos os meus amigos."</p>
+                        <div class="flex items-center gap-4">
+                            <img src="https://picsum.photos/seed/patient3/200/200" alt="Carla Mendes" class="w-12 h-12 rounded-full object-cover">
+                            <div>
+                                <h4 class="font-extrabold text-[#4A5D54]">Carla Mendes</h4>
+                                <p class="text-xs text-[#8EAC9B] font-extrabold">Ortodontia</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA Section -->
+        <section class="py-24 px-6 text-center">
+          <div class="max-w-xl mx-auto space-y-6">
+            <span class="text-[#8EAC9B] font-extrabold tracking-widest uppercase text-xs">Agendamento Simplificado</span>
+            <h2 class="text-4xl font-extrabold text-[#4A5D54]">Pronto para transformar seu sorriso?</h2>
+            <p class="text-lg text-[#6D7A73]">
+              Reserve seu horário em menos de um minuto e nossa equipe entrará em contato.
+            </p>
+            <button 
+              onclick="toggleBooking(true)"
+              class="mt-4 bg-[#4A5D54] text-white px-10 py-4 rounded-full text-lg font-extrabold shadow-lg shadow-[#4A5D54]/20 hover:scale-105 transition-transform"
+            >
+              Agendar consulta agora
+            </button>
+          </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#4A5D54] text-[#E8F3ED] pt-20 pb-10 px-6">
+      <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-12 mb-16">
+        <div class="col-span-2 space-y-6">
+          <div class="flex items-center">
+            <img src="https://i.imgur.com/0HtyACs.png" alt="Inova+" class="h-9 w-auto brightness-0 invert" />
+          </div>
+          <p class="text-[#BCCBC1] max-w-sm">
+            Referência em tratamentos odontológicos modernos, unindo tecnologia e cuidado humano para transformar sorrisos.
+          </p>
+          <div class="flex gap-4">
+            <a href="#" class="w-10 h-10 rounded-full border border-[#8EAC9B] flex items-center justify-center hover:bg-[#8EAC9B] transition-colors">
+              <i data-lucide="instagram" class="w-5 h-5"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full border border-[#8EAC9B] flex items-center justify-center hover:bg-[#8EAC9B] transition-colors">
+              <i data-lucide="facebook" class="w-5 h-5"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <h4 class="font-extrabold text-white uppercase tracking-widest text-xs">Unidade Central</h4>
+          <div class="space-y-4 text-sm">
+            <div class="flex items-start gap-3">
+              <i data-lucide="map-pin" class="w-5 h-5 text-[#8EAC9B] shrink-0"></i>
+              <span>Av. das Tulipas, 120 - Sala 402<br />Bairro Jardim, São Paulo - SP</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <h4 class="font-extrabold text-white uppercase tracking-widest text-xs">Contatos</h4>
+          <div class="space-y-4 text-sm">
+            <div class="flex items-center gap-3">
+              <i data-lucide="phone" class="w-5 h-5 text-[#8EAC9B]"></i>
+              <span>(11) 4004-9000</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <i data-lucide="message-circle" class="w-5 h-5 text-[#8EAC9B]"></i>
+              <span>(11) 98888-7777</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="max-w-6xl mx-auto pt-10 border-t border-white/10 text-center md:text-left flex flex-col md:flex-row justify-between gap-4 text-xs text-[#BCCBC1]">
+        <p>© 2024 Clínica Inova+. Todos os direitos reservados. RT: Dr. João Silva - CRO/SP 12345</p>
+        <div class="flex gap-6 justify-center">
+          <a href="#" class="hover:text-white">Privacidade</a>
+          <a href="#" class="hover:text-white">Termos de Uso</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Booking Modal Structure -->
+    <div id="booking-modal" class="fixed inset-0 z-[60] flex items-center justify-center p-4 hidden">
+        <div class="absolute inset-0 bg-[#3D4B44]/20 backdrop-blur-sm transition-opacity" onclick="toggleBooking(false)"></div>
+        <div class="relative w-full max-w-lg bg-[#FDFBF7] rounded-[40px] shadow-2xl overflow-hidden modal-animate">
+            <button onclick="toggleBooking(false)" class="absolute top-6 right-6 p-2 rounded-full hover:bg-[#F5F1EA] transition-colors">
+                <i data-lucide="x" class="w-5 h-5 text-[#6D7A73]"></i>
+            </button>
+
+            <div class="p-8 md:p-12">
+                <!-- Progress bar -->
+                <div id="modal-progress" class="mb-8 flex gap-2">
+                    <div id="prog-1" class="h-1.5 flex-1 rounded-full bg-[#8EAC9B]"></div>
+                    <div id="prog-2" class="h-1.5 flex-1 rounded-full bg-[#E8F3ED]"></div>
+                    <div id="prog-3" class="h-1.5 flex-1 rounded-full bg-[#E8F3ED]"></div>
+                </div>
+
+                <!-- Step 1: Services -->
+                <div id="step-1" class="step-content space-y-6">
+                    <div class="space-y-2">
+                        <h3 class="text-2xl font-extrabold text-[#4A5D54]">O que você busca hoje?</h3>
+                        <p class="text-[#6D7A73]">Isso ajuda a gente a preparar o melhor atendimento.</p>
+                    </div>
+                    <div class="grid gap-3">
+                        <button onclick="setService('Rotina')" class="w-full text-left p-4 rounded-2xl border-2 border-[#E8F3ED] hover:border-[#8EAC9B] hover:bg-white transition-all font-bold text-[#4A5D54]">Só um check-up de rotina</button>
+                        <button onclick="setService('Estética')" class="w-full text-left p-4 rounded-2xl border-2 border-[#E8F3ED] hover:border-[#8EAC9B] hover:bg-white transition-all font-bold text-[#4A5D54]">Deixar o sorriso mais bonito</button>
+                        <button onclick="setService('Dor')" class="w-full text-left p-4 rounded-2xl border-2 border-[#E8F3ED] hover:border-[#8EAC9B] hover:bg-white transition-all font-bold text-[#4A5D54]">Resolver uma dor ou incômodo</button>
+                        <button onclick="setService('Aparelho')" class="w-full text-left p-4 rounded-2xl border-2 border-[#E8F3ED] hover:border-[#8EAC9B] hover:bg-white transition-all font-bold text-[#4A5D54]">Aparelhos invisíveis</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Date Preference -->
+                <div id="step-2" class="step-content space-y-6 hidden">
+                    <button onclick="goStep(1)" class="flex items-center gap-1 text-sm text-[#8EAC9B] font-extrabold">
+                        <i data-lucide="chevron-left" class="w-4 h-4"></i> Voltar
+                    </button>
+                    <div class="space-y-2">
+                        <h3 class="text-2xl font-extrabold text-[#4A5D54]">Qual o melhor horário?</h3>
+                        <p class="text-[#6D7A73]">Escolha o período que fica mais fácil para você.</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="setTime('Manhã')" class="p-6 rounded-2xl border-2 border-[#E8F3ED] hover:border-[#8EAC9B] hover:bg-white transition-all font-bold text-[#4A5D54] flex flex-col items-center gap-2">
+                            <i data-lucide="calendar" class="w-5 h-5 opacity-40"></i>
+                            Manhã
+                        </button>
+                        <button onclick="setTime('Tarde')" class="p-6 rounded-2xl border-2 border-[#E8F3ED] hover:border-[#8EAC9B] hover:bg-white transition-all font-bold text-[#4A5D54] flex flex-col items-center gap-2">
+                            <i data-lucide="calendar" class="w-5 h-5 opacity-40"></i>
+                            Tarde
+                        </button>
+                        <button onclick="setTime('Noite')" class="p-6 rounded-2xl border-2 border-[#E8F3ED] hover:border-[#8EAC9B] hover:bg-white transition-all font-bold text-[#4A5D54] flex flex-col items-center gap-2">
+                            <i data-lucide="calendar" class="w-5 h-5 opacity-40"></i>
+                            Noite
+                        </button>
+                        <button onclick="setTime('Qualquer')" class="p-6 rounded-2xl border-2 border-[#E8F3ED] hover:border-[#8EAC9B] hover:bg-white transition-all font-bold text-[#4A5D54] flex flex-col items-center gap-2">
+                            <i data-lucide="calendar" class="w-5 h-5 opacity-40"></i>
+                            Qualquer hora
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Contact Details -->
+                <div id="step-3" class="step-content space-y-6 hidden">
+                    <button onclick="goStep(2)" class="flex items-center gap-1 text-sm text-[#8EAC9B] font-extrabold">
+                        <i data-lucide="chevron-left" class="w-4 h-4"></i> Voltar
+                    </button>
+                    <div class="space-y-2">
+                        <h3 class="text-2xl font-extrabold text-[#4A5D54]">Só mais um detalhe...</h3>
+                        <p class="text-[#6D7A73]">Como podemos te chamar e onde entramos em contato?</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="relative">
+                          <i data-lucide="user" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#6D7A73] opacity-40"></i>
+                          <input 
+                            type="text" 
+                            id="user-name"
+                            required
+                            placeholder="Seu nome completo"
+                            class="w-full pl-12 pr-4 py-4 rounded-2xl bg-white border-2 border-[#E8F3ED] focus:border-[#8EAC9B] outline-none transition-all"
+                          >
+                        </div>
+                        <div class="relative">
+                          <i data-lucide="phone" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#6D7A73] opacity-40"></i>
+                          <input 
+                            type="tel" 
+                            id="user-phone"
+                            required
+                            placeholder="WhatsApp para contato"
+                            class="w-full pl-12 pr-4 py-4 rounded-2xl bg-white border-2 border-[#E8F3ED] focus:border-[#8EAC9B] outline-none transition-all"
+                          >
+                        </div>
+                    </div>
+                    <button 
+                        onclick="finishBooking()"
+                        class="w-full bg-[#4A5D54] text-white py-4 rounded-full text-lg font-extrabold shadow-lg shadow-[#4A5D54]/10"
+                    >
+                        Tudo pronto, me chamem!
+                    </button>
+                </div>
+
+                <!-- Step 4: Success -->
+                <div id="step-4" class="step-content text-center space-y-6 py-8 hidden">
+                    <div class="w-20 h-20 bg-[#E8F3ED] rounded-full flex items-center justify-center mx-auto text-[#8EAC9B]">
+                        <i data-lucide="check-circle-2" class="w-10 h-10"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="text-3xl font-extrabold text-[#4A5D54]" id="success-msg">Perfeito!</h3>
+                        <p class="text-[#6D7A73] text-lg">
+                            Já recebemos seu interesse. Em breve nossa equipe vai te mandar um "oi" no WhatsApp para combinarmos o melhor horário.
+                        </p>
+                    </div>
+                    <button 
+                        onclick="toggleBooking(false)"
+                        class="bg-[#E8F3ED] text-[#4A5D54] px-10 py-4 rounded-full font-extrabold"
+                    >
+                        Combinado!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Navbar Scroll Logic
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('bg-white/80', 'backdrop-blur-md', 'shadow-sm', 'py-3');
+                nav.classList.remove('py-6');
+            } else {
+                nav.classList.remove('bg-white/80', 'backdrop-blur-md', 'shadow-sm', 'py-3');
+                nav.classList.add('py-6');
+            }
+        });
+
+        // Mobile Menu Logic
+        function toggleMobileMenu(show) {
+            const menu = document.getElementById('mobile-menu');
+            if (show) menu.classList.remove('hidden');
+            else menu.classList.add('hidden');
+        }
+
+        // Booking Modal Logic
+        let currentStep = 1;
+        const bookingData = {
+            service: '',
+            time: '',
+            name: '',
+            phone: ''
+        };
+
+        function toggleBooking(show) {
+            const modal = document.getElementById('booking-modal');
+            if (show) {
+                modal.classList.remove('hidden');
+                goStep(1);
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        function goStep(step) {
+            currentStep = step;
+            // Hide all steps
+            document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
+            // Show target step
+            document.getElementById(`step-${step}`).classList.remove('hidden');
+            
+            // Progress Bar Logic
+            const progress = document.getElementById('modal-progress');
+            if (step < 4) {
+                progress.classList.remove('hidden');
+                for (let i = 1; i <= 3; i++) {
+                    const bar = document.getElementById(`prog-${i}`);
+                    if (i <= step) {
+                        bar.classList.add('bg-[#8EAC9B]');
+                        bar.classList.remove('bg-[#E8F3ED]');
+                    } else {
+                        bar.classList.remove('bg-[#8EAC9B]');
+                        bar.classList.add('bg-[#E8F3ED]');
+                    }
+                }
+            } else {
+                progress.classList.add('hidden');
+            }
+            // Update icons for the new step
+            lucide.createIcons();
+        }
+
+        function setService(val) {
+            bookingData.service = val;
+            goStep(2);
+        }
+
+        function setTime(val) {
+            bookingData.time = val;
+            goStep(3);
+        }
+
+        function finishBooking() {
+            const name = document.getElementById('user-name').value;
+            const phone = document.getElementById('user-phone').value;
+            if (!name || !phone) {
+                alert('Por favor, preencha seu nome e contato.');
+                return;
+            }
+            bookingData.name = name;
+            bookingData.phone = phone;
+            
+            const firstName = name.split(' ')[0];
+            document.getElementById('success-msg').textContent = `Perfeito, ${firstName}!`;
+            goStep(4);
+        }
+    </script>
 </body>
 </html>
